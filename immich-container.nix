@@ -59,7 +59,8 @@ in {
               restart = "always";
               ports = [ "${toString cfg.port}:3001" ];
               command = [ "start.sh" "immich" ];
-              depends_on = [ "redis" "database" ];
+              depends_on =
+                [ "redis" "database" "immich-ml" "immich-microservices" ];
               volumes = [
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
@@ -72,7 +73,7 @@ in {
               image = cfg.images.immich;
               restart = "always";
               command = [ "start.sh" "microservices" ];
-              depends_on = [ "redis" "database" ];
+              depends_on = [ "redis" "database" "immich-ml" ];
               volumes = [
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
@@ -98,7 +99,6 @@ in {
             service = {
               image = cfg.images.postgresql;
               restart = "always";
-              depends_on = [ "redis" "database" ];
               volumes =
                 [ "${cfg.state-directory}/database:/var/lib/postgresql/data" ];
             };

@@ -58,9 +58,11 @@ in {
   config = {
     fudo.secrets.host-secrets."${hostname}".immichEnv = {
       source-file = mkEnvFile {
+        DB_HOSTNAME = "database";
         DB_USERNAME = "immich";
         DB_DATABASE_NAME = "immich";
         DB_PASSWORD = readFile databasePassword;
+        REDIS_HOSTNAME = "redis";
       };
       target-file = "/run/immich/env";
     };

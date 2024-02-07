@@ -17,6 +17,12 @@ in {
       description = "Path at which to store bulk server data.";
     };
 
+    port = mkOption {
+      type = port;
+      description = "Port on which to listen for requests.";
+      default = 3254;
+    };
+
     images = {
       immich = mkOption {
         type = str;

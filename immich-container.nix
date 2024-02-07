@@ -1,7 +1,16 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-let cfg = config.services.immichContainer;
+let
+  cfg = config.services.immichContainer;
+  hostname = config.instance.hostname;
+
+  mkEnvFile = attrs:
+    concatStringsSep "\n" (mapAttrsToList (k: v: "${k}=${v}") attrs);
+
+  databasePassword = pkgs.lib.passwd.stablerandom-passwd-file "immich-db-passwd"
+    config.instance.build-seed;
+
 in {
   options.services.immichContainer = with types; {
     enable =
@@ -44,6 +53,15 @@ in {
   };
 
   config = {
+    fudo.secrets.host-secrets."${hostname}".immichEnv = {
+      source-file = mkEnvFile {
+        DB_USERNAME = "immich";
+        DB_DATABASE_NAME = "immich";
+        DB_PASSWORD = readFile databasePassword;
+      };
+      target-file = "/run/immich/env";
+    };
+
     systemd.tmpfiles.rules = [
       "d ${cfg.state-directory} 0750 root root - -"
       "d ${cfg.store-directory} 0750 root root - -"

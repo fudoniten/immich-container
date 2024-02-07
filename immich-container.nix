@@ -57,7 +57,7 @@ in {
             service = {
               image = cfg.images.immich;
               restart = "always";
-              ports = [ "${cfg.port}:3001" ];
+              ports = [ "${toString cfg.port}:3001" ];
               command = [ "start.sh" "immich" ];
               depends_on = [ "redis" "database" ];
               volumes = [

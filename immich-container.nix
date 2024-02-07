@@ -12,6 +12,8 @@ let
   databasePassword = pkgs.lib.passwd.stablerandom-passwd-file "immich-db-passwd"
     config.instance.build-seed;
 
+  hostSecrets = config.fudo.secrets.host-secrets."${hostname}";
+
 in {
   options.services.immichContainer = with types; {
     enable =

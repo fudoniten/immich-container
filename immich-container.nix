@@ -84,6 +84,7 @@ in {
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
               ];
+              env_files = [ hostSecrets.immichEnv.target-file ];
             };
           };
 
@@ -97,6 +98,7 @@ in {
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
               ];
+              env_files = [ hostSecrets.immichEnv.target-file ];
             };
           };
 
@@ -105,6 +107,7 @@ in {
               image = cfg.images.immich-ml;
               restart = "always";
               volumes = [ "${cfg.state-directory}/model-cache:/cache" ];
+              env_files = [ hostSecrets.immichEnv.target-file ];
             };
           };
 
@@ -120,6 +123,7 @@ in {
               restart = "always";
               volumes =
                 [ "${cfg.state-directory}/database:/var/lib/postgresql/data" ];
+              env_files = [ hostSecrets.immichEnv.target-file ];
             };
           };
         };

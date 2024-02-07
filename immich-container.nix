@@ -38,6 +38,11 @@ in {
   };
 
   config = {
+    systemd.tmpfiles.rules = [
+      "d ${cfg.state-directory} 0750 root root - -"
+      "d ${cfg.store-directory} 0750 root root - -"
+    ];
+
     virtualisation.arion.projects.nextcloud.settings = let
       image = { ... }: {
         project.name = "immich";

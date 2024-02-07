@@ -6,7 +6,8 @@ let
   hostname = config.instance.hostname;
 
   mkEnvFile = attrs:
-    concatStringsSep "\n" (mapAttrsToList (k: v: "${k}=${v}") attrs);
+    writeText "env-file"
+    (concatStringsSep "\n" (mapAttrsToList (k: v: "${k}=${v}") attrs));
 
   databasePassword = pkgs.lib.passwd.stablerandom-passwd-file "immich-db-passwd"
     config.instance.build-seed;

@@ -86,7 +86,7 @@ in {
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
               ];
-              env_files = [ hostSecrets.immichEnv.target-file ];
+              env_file = [ hostSecrets.immichEnv.target-file ];
             };
           };
 

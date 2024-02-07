@@ -99,6 +99,6 @@ in {
           };
         };
       };
-    in imports [ image ];
+    in { imports = [ image ]; };
   };
 }

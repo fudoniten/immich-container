@@ -49,7 +49,7 @@ in {
       "d ${cfg.store-directory} 0750 root root - -"
     ];
 
-    virtualisation.arion.projects.nextcloud.settings = let
+    virtualisation.arion.projects.immich.settings = let
       image = { ... }: {
         project.name = "immich";
         services = {

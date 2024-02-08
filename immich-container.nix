@@ -55,7 +55,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     fudo.secrets.host-secrets."${hostname}".immichEnv = {
       source-file = mkEnvFile {
         DB_HOSTNAME = "database";

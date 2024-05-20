@@ -19,6 +19,9 @@ in {
     enable =
       mkEnableOption "Enable Immich photo server running in a container.";
 
+    cpu-machine-learning =
+      mkEnableOption "Perform machine learning using the local CPU.";
+
     state-directory = mkOption {
       type = str;
       description = "Path at which to store server state.";
@@ -115,7 +118,7 @@ in {
             };
           };
 
-          immich-machine-learning = {
+          immich-machine-learning = mkIf cfg.cpu-machine-learning {
             service = {
               image = cfg.images.immich-ml;
               restart = "always";

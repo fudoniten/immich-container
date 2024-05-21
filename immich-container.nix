@@ -90,12 +90,7 @@ in {
               restart = "always";
               ports = [ "${toString cfg.port}:3001" ];
               command = [ "start.sh" "immich" ];
-              depends_on = [
-                "redis"
-                "database"
-                "immich-machine-learning"
-                "immich-microservices"
-              ];
+              depends_on = [ "redis" "database" "immich-microservices" ];
               volumes = [
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"
@@ -109,7 +104,7 @@ in {
               image = cfg.images.immich;
               restart = "always";
               command = [ "start.sh" "microservices" ];
-              depends_on = [ "redis" "database" "immich-machine-learning" ];
+              depends_on = [ "redis" "database" ];
               volumes = [
                 "${cfg.store-directory}:/usr/src/app/upload"
                 "/etc/localtime:/etc/localtime:ro"

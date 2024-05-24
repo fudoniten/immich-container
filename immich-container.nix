@@ -38,6 +38,12 @@ in {
       default = 3254;
     };
 
+    metrics-port = mkOption {
+      type = port;
+      description = "Port on which to provide metrics.";
+      default = 9090;
+    };
+
     images = {
       immich = mkOption {
         type = str;
@@ -71,6 +77,8 @@ in {
         POSTGRES_PASSWORD = readFile databasePassword;
 
         REDIS_HOSTNAME = "redis";
+
+        IMMICH_METRICS = "true";
       };
       target-file = "/run/immich/env";
     };
@@ -88,7 +96,10 @@ in {
             service = {
               image = cfg.images.immich;
               restart = "always";
-              ports = [ "${toString cfg.port}:3001" ];
+              ports = [
+                "${toString cfg.port}:3001"
+                "${toString cfg.metrics-port}:9090"
+              ];
               command = [ "start.sh" "immich" ];
               depends_on = [ "redis" "database" "immich-microservices" ];
               volumes = [

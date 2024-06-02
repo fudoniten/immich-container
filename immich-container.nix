@@ -41,7 +41,7 @@ in {
     metrics-port = mkOption {
       type = port;
       description = "Port on which to provide metrics.";
-      default = 9090;
+      default = 9075;
     };
 
     images = {

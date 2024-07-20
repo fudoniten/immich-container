@@ -84,7 +84,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${cfg.state-directory} 0750 root root - -"
+      "d ${cfg.state-directory}/redis 0750 root root - -"
       "d ${cfg.store-directory} 0750 root root - -"
     ];
 

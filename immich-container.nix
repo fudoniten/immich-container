@@ -100,21 +100,6 @@ in {
                 "${toString cfg.port}:3001"
                 "${toString cfg.metrics-port}:9090"
               ];
-              command = [ "start.sh" "immich" ];
-              depends_on = [ "redis" "database" "immich-microservices" ];
-              volumes = [
-                "${cfg.store-directory}:/usr/src/app/upload"
-                "/etc/localtime:/etc/localtime:ro"
-              ];
-              env_file = [ hostSecrets.immichEnv.target-file ];
-            };
-          };
-
-          immich-microservices = {
-            service = {
-              image = cfg.images.immich;
-              restart = "always";
-              command = [ "start.sh" "microservices" ];
               depends_on = [ "redis" "database" ];
               volumes = [
                 "${cfg.store-directory}:/usr/src/app/upload"
